@@ -4,7 +4,8 @@ import Header from './components/header.js';
 import CaseContainer from './components/caseContainer.js';
 import FilterForm from './components/filterForm.js';
 import Pagination from './components/pagination.js';
-import Footer from './components/footer.js'
+import Footer from './components/footer.js';
+import Map from './components/map.js';
 const axios = require('axios');
 import './styles/app.scss';
 
