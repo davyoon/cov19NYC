@@ -63,7 +63,7 @@ const App = () => {
                  </main>
      } else {
           main = <main>
-                    <div>Map</div>
+                    <Map covidData={covidData} />
                  </main>
      }
 
