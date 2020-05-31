@@ -4,7 +4,8 @@ Users can see COVID-19 cases in NYC by zip code. The user can switch between see
 
 Scraped COVID-19 data using cheerio and combined it with geojson file for NYC with coordinates.  Rendered the map using the combined data with D3.js.  Created components using React and conditionally changed which component should be rendered when tab is clicked. 
 
-![Demo](./images/demo.gif)
+![Demo](./images/tabledemo.gif)
+![Demo](./images/mapdemo.gif)
 
 ## Technologies
 * HTML/CSS
@@ -32,4 +33,6 @@ Scraped COVID-19 data using cheerio and combined it with geojson file for NYC wi
 * npm install
 * npm run dev
 
+## Deployment
+* <a href="https://cov19nyc.herokuapp.com/">Heroku</a>
 
