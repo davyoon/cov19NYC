@@ -6,17 +6,18 @@ import FilterForm from './components/filterForm.js';
 import Pagination from './components/pagination.js';
 import Footer from './components/footer.js';
 import Map from './components/map.js';
+import SearchZipForm from './components/searchZipForm.js';
 const axios = require('axios');
 import './styles/app.scss';
 
 
 const App = () => {
-     console.log(React)
      const [covidData, setCovidData] = React.useState([]);
      const [sort, setSort] = React.useState("zip");
      const [showPerPage, setSortPerPage] = React.useState(20);
      const [currentPage, setCurrentPage] = React.useState(1);
      const [currentTab, setCurrentTab] = React.useState("table-tab");
+     const [zipSearch, setZipSearch] = React.useState("");
 
      useEffect(() => {
           axios.get('api/covid')
@@ -38,7 +39,11 @@ const App = () => {
           setCurrentTab(tab);
      }
 
-     let sorted, data;
+     function handleZipSearch(zipSearch) {
+          setZipSearch(zipSearch);
+     }
+
+     let sorted, beforeFilter, data;
 
      //sort whether data will be shown by zip or positive cases
      if(sort === "zip"){
@@ -49,22 +54,30 @@ const App = () => {
           });
      }
 
-     //determine how the data will be split for each page
-     data = sorted.slice(showPerPage * currentPage - showPerPage, showPerPage * currentPage)
+     if(zipSearch === "") {
+          beforeFilter = sorted
+     } else {
+          beforeFilter = sorted.filter(covid => (covid.zipCode.indexOf(zipSearch)) === 0)
+     }
 
+     //determine how the data will be split for each page
+     data = beforeFilter.slice(showPerPage * currentPage - showPerPage, showPerPage * currentPage)
+          
      //determine which component to show depending on which tab is clicked
      let main;
      if(currentTab === "table-tab"){
           main = <main>
                     <div className="container">
+                         <SearchZipForm handleZipSearch={handleZipSearch} zipSearchVal={zipSearch} />
                          <CaseContainer cases={data} showPerPage={showPerPage} currentPage={currentPage} />
-                         <Pagination onPageChange={handlePagination} showPerPage={showPerPage} dataLength={covidData.length} currentPage={currentPage} />
+                         <Pagination onPageChange={handlePagination} showPerPage={showPerPage} dataLength={beforeFilter.length} currentPage={currentPage} />
                     </div>
                     <FilterForm onDropDownChange={handleChange} sort={sort} />
                  </main>
      } else {
           main = <main>
-                    <Map covidData={covidData} />
+                    <SearchZipForm handleZipSearch={handleZipSearch} zipSearchVal={zipSearch} />
+                    <Map covidData={covidData} zipSearch={zipSearch} />
                  </main>
      }
 

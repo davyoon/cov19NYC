@@ -100,7 +100,6 @@ const Map = (props) => {
 
 		// ------------------------------------- TOOLTIP -------------------------------------    
 
-		// var center = d3.geoCentroid(mapData);
 		const projection = d3.geoMercator().scale(37300).fitSize([960, 720], mapData)
 		const path = d3.geoPath().projection(projection);
 
